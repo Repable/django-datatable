@@ -21,9 +21,9 @@ class TableNode(template.Node):
 
 
 @register.tag
-def render_table(parser, token, template_name="table/table.html"):
+def render_table(parser, token):
     try:
-        tag, table = token.split_contents()
+        tag, table, template_name = token.split_contents()
     except ValueError:
         msg = '%r tag requires a single arguments' % token.split_contents()[0]
         raise template.TemplateSyntaxError(msg)
@@ -31,10 +31,10 @@ def render_table(parser, token, template_name="table/table.html"):
 
 
 @register.tag
-def render_simple_table(parser, token, template_name="table/simple_table.html"):
+def render_simple_table(parser, token):
     try:
-        tag, table = token.split_contents()
+        tag, table, template_name = token.split_contents()
     except ValueError:
-        msg = '%r tag requires a single arguments' % token.split_contents()[0]
+        msg = '%r tag requires a arguments {% render_table table template_name %]' % token.split_contents()[0]
         raise template.TemplateSyntaxError(msg)
     return TableNode(table, template_name)
